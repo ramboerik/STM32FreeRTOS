@@ -111,12 +111,12 @@ extern char _Min_Stack_Size; /* Defined in the linker script */
 #define configIDLE_SHOULD_YIELD           1
 #define configUSE_MUTEXES                 1
 #define configQUEUE_REGISTRY_SIZE         8
-#define configCHECK_FOR_STACK_OVERFLOW    0
+#define configCHECK_FOR_STACK_OVERFLOW    2
 #define configUSE_RECURSIVE_MUTEXES       1
 #define configUSE_MALLOC_FAILED_HOOK      0
 #define configUSE_APPLICATION_TASK_TAG    0
 #define configUSE_COUNTING_SEMAPHORES     1
-#define configGENERATE_RUN_TIME_STATS     0
+#define configGENERATE_RUN_TIME_STATS     1
 /*
  * If configUSE_NEWLIB_REENTRANT is set to 1 then a newlib reent structure
  * will be allocated for each created task.
@@ -199,6 +199,11 @@ header file. */
 #if defined(configUSE_CMSIS_RTOS_V2) && (configUSE_CMSIS_RTOS_V2 == 1)
 #define xPortSysTickHandler osSystickHandler
 #endif
+
+extern void RTOS_AppConfigureTimerForRuntimeStats(void);
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()   RTOS_AppConfigureTimerForRuntimeStats()
+extern uint32_t RTOS_AppGetRuntimeCounterValueFromISR(void);
+#define portGET_RUN_TIME_COUNTER_VALUE()           RTOS_AppGetRuntimeCounterValueFromISR()
 
 #endif /* FREERTOS_CONFIG_H */
 
